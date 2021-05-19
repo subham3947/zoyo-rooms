@@ -1,6 +1,7 @@
 package com.booking.zoyorooms.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -15,10 +16,11 @@ import lombok.Setter;
 
 
 @Entity
-public class Rating {
+public class Review {
 
     @Id
-    private long ratingId;
+    @GeneratedValue
+    private long reviewId;
 
     private long hotelId;
 

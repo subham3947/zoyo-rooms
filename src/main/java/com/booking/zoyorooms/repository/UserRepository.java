@@ -1,0 +1,9 @@
+package com.booking.zoyorooms.repository;
+
+import com.booking.zoyorooms.entity.User;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long>{
+    
+}

@@ -23,6 +23,8 @@ public class Reservation {
     @GeneratedValue
     private long reservationId;
 
+    private long hotelId;
+    
     private long roomId;
 
     private long userId;

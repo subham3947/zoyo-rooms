@@ -1,15 +1,19 @@
 package com.booking.zoyorooms.service;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.booking.zoyorooms.entity.Facility;
 import com.booking.zoyorooms.entity.Hotel;
+import com.booking.zoyorooms.entity.Reservation;
 import com.booking.zoyorooms.entity.Review;
 import com.booking.zoyorooms.entity.Room;
 import com.booking.zoyorooms.repository.FacilityRepository;
 import com.booking.zoyorooms.repository.HotelRepository;
+import com.booking.zoyorooms.repository.ReservationRepository;
 import com.booking.zoyorooms.repository.ReviewRepository;
 import com.booking.zoyorooms.repository.RoomRepository;
 
@@ -32,6 +36,9 @@ public class HotelServiceImpl implements HotelService{
 
     @Autowired
     FacilityRepository facilityRepository;
+
+    @Autowired
+    ReservationRepository reservationRepository;
     
 
     @Override
@@ -102,6 +109,45 @@ public class HotelServiceImpl implements HotelService{
                     facilityRepository.delete(facility);
                 }
         }
+    }
+
+
+    @Override
+    public List<Hotel> getHotelsByFilter(String city, LocalDate checkIn, LocalDate checkOut, Integer guests, Integer star,
+            List<String> facilities) {
+        List<Hotel> hotelList = new ArrayList<Hotel>();
+        hotelList = getHotelsWithRoomsAvailable(hotelRepository.findByCityContainingIgnoreCase(city), checkIn, checkOut, guests);
+        return hotelList;
+    }
+
+    public List<Hotel> getHotelsWithRoomsAvailable(Optional<List<Hotel>> optionalHotelList, LocalDate checkIn,
+            LocalDate checkOut, int guests) {
+        int totalCapacity = 0;
+        List<Hotel> hotelsAvailable = new ArrayList<Hotel>();
+        System.out.println(optionalHotelList); 
+        if (optionalHotelList.isPresent()) {
+            for (Hotel hotel : optionalHotelList.get()) {
+                totalCapacity = 0;
+                for (Reservation reservation : reservationRepository.findByHotelId(hotel.getHotelId()).get()) {             
+                    if( (checkIn.isBefore(reservation.getCheckIn()) && checkOut.isBefore(reservation.getCheckIn())) 
+                            || (checkIn.isAfter(reservation.getCheckOut()) && checkIn.isAfter(reservation.getCheckOut()))){
+                        totalCapacity += getAvailableCapacity(reservation.getRoomId()); 
+                    }
+                }
+                if (totalCapacity >= guests) {
+                    hotelsAvailable.add(hotel);
+                }
+            }
+        }
+        return hotelsAvailable;
+    }
+
+    public int getAvailableCapacity(Long availableRoomId){
+        Optional<Room> room = roomRepository.findById(availableRoomId);
+        if (room.isPresent()) {
+                return room.get().getCapacity();
+        }
+        return 0;
     }
     
 }

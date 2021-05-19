@@ -1,5 +1,6 @@
 package com.booking.zoyorooms.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.booking.zoyorooms.entity.Hotel;
@@ -15,4 +16,7 @@ public interface HotelService {
     public ResponseEntity<String> updateHotel(Hotel hotel, Long hotelId);
 
     public ResponseEntity<String> deleteHotel(long hotelId);
+
+    public List<Hotel> getHotelsByFilter(String city, LocalDate checkIn, LocalDate checkOut, Integer guests, Integer star,
+            List<String> facilities);
 }

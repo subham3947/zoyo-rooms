@@ -13,5 +13,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
 
     Optional<List<Review>> findByHotelId(long hotelId);
 
+    List<Review> findByRatingAndHotelId(int parseInt, long hotelId);
+
+    Optional<Review> findByUserIdAndHotelId(long userId, long hotelId);
+
     
 }

@@ -33,16 +33,13 @@ public class UserServiceImpl implements UserService{
 	    return ResponseEntity.created(location).build();
     }
 
-
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-
     @Override
     public ResponseEntity<String> updateUser(User user, Long userId) {
-
         Optional<User> userOptional = userRepository.findById(userId);
 	    if (!userOptional.isPresent())
 		    return ResponseEntity.notFound().build();
@@ -51,7 +48,6 @@ public class UserServiceImpl implements UserService{
 	    userRepository.save(user);
 	    return ResponseEntity.ok().build();
     }
-
 
     @Override
     public ResponseEntity<String> deleteUser(Long userId) {

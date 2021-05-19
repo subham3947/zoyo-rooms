@@ -87,6 +87,9 @@ public class ReviewServiceImpl implements ReviewService{
             if (optionalReview.isPresent())
             reviewSet.add(optionalReview.get());
         }
+        if (reviewSet.size() == 0)
+            reviewSet.addAll(reviewRepository.findByHotelId(hotelId).get());
+        System.out.println(reviewSet);
         return reviewSet;
     }
     

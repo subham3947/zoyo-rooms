@@ -117,6 +117,9 @@ public class HotelServiceImpl implements HotelService{
             List<String> facilities) {
         List<Hotel> hotelList = new ArrayList<Hotel>();
         hotelList = getHotelsWithRoomsAvailable(hotelRepository.findByCityContainingIgnoreCase(city), checkIn, checkOut, guests);
+        if (facilities.size() > 0) {
+            hotelList = checkForFacilities(facilities, hotelList);
+        }
         return hotelList;
     }
 
@@ -150,4 +153,31 @@ public class HotelServiceImpl implements HotelService{
         return 0;
     }
     
+    public List<Hotel> checkForFacilities(List<String> requiredFacilities, List<Hotel> hotelList) {
+        for (Hotel hotel : hotelList) {
+            Optional<List<Facility>> optionalFacility = facilityRepository.findByHotelId(hotel.getHotelId());
+            if(optionalFacility.isPresent()) {
+                Facility hotelFacility = optionalFacility.get().get(0);
+                for(int i = 0; i < requiredFacilities.size(); i++) {
+                    switch(requiredFacilities.get(i)) {
+                        case "wifi":
+                          if (!hotelFacility.isWifi())
+                            break;
+                        case "ac":
+                          // code block
+                          break;
+                        case "meals":
+                          // code block
+                          break;
+                        case "restaurant":
+                          // code block
+                          break;
+                        
+                      }
+                }
+                
+            }
+        }
+        return null;
+    }
 }

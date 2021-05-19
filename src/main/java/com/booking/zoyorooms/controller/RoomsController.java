@@ -71,7 +71,6 @@ public class RoomsController {
     @GetMapping("/showReviews/{hotelId}")
     public Set<Review> getReviews(@PathVariable long hotelId,@RequestParam(required = false) String city,
             @RequestParam(required = false) String rating, @RequestParam(required = false) String gender){
-        System.out.println(city+" "+rating+" "+gender);
         return reviewService.getHotelReviewByFilters(hotelId, city, rating, gender);
     }
 

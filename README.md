@@ -14,7 +14,7 @@
     1. Clone the project in the local repository by using the below command.
         git clone git@github.com:subham3947/zoyo-rooms.git
     2. The application can be started in two ways:-
-        a.) Run the ZoyoRoomsApplication.java file.
+        a.) Run the ZoyoRoomsApplication.java file, or
         b.) Open the terminal and execute the below command
             java -jar <path_to_the_jar_file>   for instance, java -jar /target/zoyo-rooms-0.0.1-SNAPSHOT.jar 
 

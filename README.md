@@ -18,6 +18,11 @@
         b.) Open the terminal and execute the below command
             java -jar <path_to_the_jar_file>   for instance, java -jar /target/zoyo-rooms-0.0.1-SNAPSHOT.jar 
 
+## Database
+    1. This application uses an in-memory H2 database for simplicity.
+    2. Everytime the server starts the tables are initialized with some data.
+    3. If needed, please add insert queries in Import.sql file under /resources folder.
+
 ## REST API Url Endpoints with tasks
     With the correct request to the API endpoint a user gets a response for the following tasks:-
     

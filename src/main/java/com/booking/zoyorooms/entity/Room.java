@@ -27,6 +27,6 @@ public class Room {
 
     private int price;
 
-    private boolean available;
+    //private boolean available;
     
 }

@@ -51,4 +51,5 @@
 ## Assumptions
     - A deletion of a Hotel will result into deletion of all its rooms, reviews, and facilities.
     - A deletion of a User will result into deletion of all reviews provided by the user.
-    - If a room is available then its CheckIn and CheckOut date will be somewhere in the year 2099.
+    - If a room is available then its CheckIn and CheckOut date will be somewhere in the year 2099
+        in the Reservation table.

@@ -29,7 +29,7 @@
     Get List of all Hotels (GET): http://localhost:8080/zoyorooms/getAllHotels
     Add a Hotel to the database (POST): http://localhost:8080/zoyorooms/add/hotel
     Update a Hotel information (PUT):http://localhost:8080/zoyorooms/update/hotel/{hotelId}
-    Search a Hotel with parameters (GET): http://localhost:8080/zoyorooms/search/hotel/city/kolkata/checkIn/2021-05-16/checkOut/2021-05-18?guests=2?star=3?facilities=wifi,ac
+    Search a Hotel with parameters (GET): http://localhost:8080/zoyorooms/search/hotel/city/kolkata/checkIn/2021-05-16/checkOut/2021-05-18?guests=1&star=3&facilities=ac,wifi,meals
     Delete a Hotel information (PUT):http://localhost:8080/zoyorooms/delete/hotel/{hotelId}
     Show reviews for a Hotel (GET): http://localhost:8080/zoyorooms/showReviews/{hotelId}?city=Hyderabad?rating=9?gender=M
     Add a User to the database (POST): http://localhost:8080/zoyorooms/add/user

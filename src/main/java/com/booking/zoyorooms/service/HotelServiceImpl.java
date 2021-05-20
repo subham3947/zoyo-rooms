@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import com.booking.zoyorooms.entity.Facility;
 import com.booking.zoyorooms.entity.Hotel;
@@ -121,7 +120,7 @@ public class HotelServiceImpl implements HotelService{
             List<String> facilities) {
         List<Hotel> hotelList = new ArrayList<Hotel>();
         hotelList = getHotelsWithRoomsAvailable(hotelRepository.findByCityContainingIgnoreCase(city), checkIn, checkOut, guests);
-        if (facilities.size() > 0) {
+        if (facilities != null) {
             return new HashSet<Hotel>(checkForFacilities(facilities, hotelList));
         }
         return new HashSet<Hotel>(hotelList);

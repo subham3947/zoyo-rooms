@@ -47,8 +47,6 @@ public class RoomsController {
             @RequestParam(required=false,defaultValue="1") Integer guests,
             @RequestParam(required=false,defaultValue="1") Integer star,
             @RequestParam(required=false) List<String> facilities){
-        // System.out.println(LocalDate.parse(date));
-        //System.out.println(facilities);
         return new ArrayList<Hotel>(hotelService.getHotelsByFilter(city, LocalDate.parse(checkIn),LocalDate.parse(checkOut), guests, 
             star, facilities));
         }

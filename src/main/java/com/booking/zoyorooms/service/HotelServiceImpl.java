@@ -3,8 +3,12 @@ package com.booking.zoyorooms.service;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.booking.zoyorooms.entity.Facility;
 import com.booking.zoyorooms.entity.Hotel;
@@ -113,25 +117,24 @@ public class HotelServiceImpl implements HotelService{
 
 
     @Override
-    public List<Hotel> getHotelsByFilter(String city, LocalDate checkIn, LocalDate checkOut, Integer guests, Integer star,
+    public HashSet<Hotel> getHotelsByFilter(String city, LocalDate checkIn, LocalDate checkOut, Integer guests, Integer star,
             List<String> facilities) {
         List<Hotel> hotelList = new ArrayList<Hotel>();
         hotelList = getHotelsWithRoomsAvailable(hotelRepository.findByCityContainingIgnoreCase(city), checkIn, checkOut, guests);
         if (facilities.size() > 0) {
-            hotelList = checkForFacilities(facilities, hotelList);
+            return new HashSet<Hotel>(checkForFacilities(facilities, hotelList));
         }
-        return hotelList;
+        return new HashSet<Hotel>(hotelList);
     }
 
     public List<Hotel> getHotelsWithRoomsAvailable(Optional<List<Hotel>> optionalHotelList, LocalDate checkIn,
             LocalDate checkOut, int guests) {
         int totalCapacity = 0;
         List<Hotel> hotelsAvailable = new ArrayList<Hotel>();
-        System.out.println(optionalHotelList); 
         if (optionalHotelList.isPresent()) {
             for (Hotel hotel : optionalHotelList.get()) {
-                totalCapacity = 0;
-                for (Reservation reservation : reservationRepository.findByHotelId(hotel.getHotelId()).get()) {             
+                totalCapacity = 0;  
+                for (Reservation reservation : reservationRepository.findByHotelId(hotel.getHotelId()).get()) {     
                     if( (checkIn.isBefore(reservation.getCheckIn()) && checkOut.isBefore(reservation.getCheckIn())) 
                             || (checkIn.isAfter(reservation.getCheckOut()) && checkIn.isAfter(reservation.getCheckOut()))){
                         totalCapacity += getAvailableCapacity(reservation.getRoomId()); 
@@ -154,30 +157,24 @@ public class HotelServiceImpl implements HotelService{
     }
     
     public List<Hotel> checkForFacilities(List<String> requiredFacilities, List<Hotel> hotelList) {
+        List<Hotel> finalHotelList = new ArrayList<Hotel>();
         for (Hotel hotel : hotelList) {
             Optional<List<Facility>> optionalFacility = facilityRepository.findByHotelId(hotel.getHotelId());
             if(optionalFacility.isPresent()) {
                 Facility hotelFacility = optionalFacility.get().get(0);
-                for(int i = 0; i < requiredFacilities.size(); i++) {
-                    switch(requiredFacilities.get(i)) {
-                        case "wifi":
-                          if (!hotelFacility.isWifi())
-                            break;
-                        case "ac":
-                          // code block
-                          break;
-                        case "meals":
-                          // code block
-                          break;
-                        case "restaurant":
-                          // code block
-                          break;
-                        
-                      }
+                Map<String, Boolean> facilityMap = new HashMap<String, Boolean>();
+                facilityMap.put("wifi", hotelFacility.isWifi());
+                facilityMap.put("ac", hotelFacility.isAc());
+                facilityMap.put("meals", hotelFacility.isMeals());
+                facilityMap.put("restaurant", hotelFacility.isRestaurant());
+                for(String facility : requiredFacilities) {
+                    if(!facilityMap.get(facility)){
+                        break;
+                    }
+                    finalHotelList.add(hotel);
                 }
-                
             }
         }
-        return null;
+        return finalHotelList;
     }
 }

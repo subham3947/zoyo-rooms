@@ -1,6 +1,7 @@
 package com.booking.zoyorooms.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -48,8 +49,8 @@ public class RoomsController {
             @RequestParam(required=false) List<String> facilities){
         // System.out.println(LocalDate.parse(date));
         //System.out.println(facilities);
-        return hotelService.getHotelsByFilter(city, LocalDate.parse(checkIn),LocalDate.parse(checkOut), guests, 
-            star, facilities);
+        return new ArrayList<Hotel>(hotelService.getHotelsByFilter(city, LocalDate.parse(checkIn),LocalDate.parse(checkOut), guests, 
+            star, facilities));
         }
 
     @PostMapping("/add/hotel")

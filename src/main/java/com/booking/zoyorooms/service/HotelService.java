@@ -1,6 +1,7 @@
 package com.booking.zoyorooms.service;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 
 import com.booking.zoyorooms.entity.Hotel;
@@ -45,8 +46,8 @@ public interface HotelService {
    * @param guests Number of persons.
    * @param star Star of the hotel.
    * @param facilities List of facilities Hotel should have.
-   * @return List of hotel qualifying all criterias.
+   * @return Hashset of hotel qualifying all criterias.
    */
-    public List<Hotel> getHotelsByFilter(String city, LocalDate checkIn, LocalDate checkOut, Integer guests, Integer star,
+    public HashSet<Hotel> getHotelsByFilter(String city, LocalDate checkIn, LocalDate checkOut, Integer guests, Integer star,
             List<String> facilities);
 }
